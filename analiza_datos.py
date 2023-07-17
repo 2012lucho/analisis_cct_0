@@ -1,6 +1,6 @@
 import csv
 
-reg = 0
+total_registros = 0
 
 dedicacion = { "full_time": [], "part_time": [] }
 pago_dolares = { "si": [], "no": [], "parcial": []}
@@ -16,7 +16,7 @@ with open("encuesta.csv", 'r') as csvfile:
         print("")
         
         #Cataloga por conformidad
-        if (reg > 0):
+        if (total_registros > 0):
             if (data[13] in conformidad):
                 conformidad[str(data[13])].append(data)
             else:
@@ -32,7 +32,12 @@ with open("encuesta.csv", 'r') as csvfile:
         #Cataloga por pago en dolares
         if (data[6] == ''):
             pago_dolares["no"].append(data)
-        reg = reg + 1
+        total_registros = total_registros + 1
 
 
-print(str(reg)+' Registros')
+print(str(total_registros)+' Registros')
+
+print("Conformidad salario:")
+keys_conformidad = conformidad.keys()
+for key in keys_conformidad:
+    print("- "+str(key)+': '+str( len(conformidad[key]) / (total_registros/100) ) + "%")
