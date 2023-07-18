@@ -1,4 +1,7 @@
 import csv
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 
 total_registros = 0
 
@@ -49,10 +52,28 @@ with open("encuesta.csv", 'r') as csvfile:
 
 print(str(total_registros)+' Registros')
 
+grafica_conformidad = []
+labels_grafica_conformidad = []
 print("Conformidad salario:")
 keys_conformidad = conformidad.keys()
 for key in keys_conformidad:
+    grafica_conformidad.append( len(conformidad[key]) / (total_registros/100) )
+    labels_grafica_conformidad.append( key )
     print("- "+str(key)+': '+str( len(conformidad[key]) / (total_registros/100) ) + "%")
+
+
+explode = (0.1, 0, 0, 0)  
+
+fig1, ax1 = plt.subplots()
+#Creamos el grafico, añadiendo los valores
+ax1.pie(grafica_conformidad, explode=explode, labels=labels_grafica_conformidad, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+#señalamos la forma, en este caso 'equal' es para dar forma circular
+ax1.axis('equal')
+plt.title("Conformidad POr Sueldo")
+plt.legend()
+plt.savefig('conformidad_sueldos.png')
+plt.show()
 
 print("Menciones Beneficios")
 key_beneficios = beneficios.keys()
