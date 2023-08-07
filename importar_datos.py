@@ -82,7 +82,7 @@ def importar_registros():
                 sql = sql + ')'
                 print(sql)
                 sqlite.execute(sql)
-
+                con.commit()
             i = i + 1
 
 
